@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile – IndiaExamHub</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">IndiaExamHub</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span class="bar top"></span>
+        <span class="bar middle"></span>
+        <span class="bar bottom"></span>
+      </button>
+      <div class="nav-links" id="navLinks"></div>
+    </div>
+  </nav>
+
+  <section class="container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-avatar-large" id="profileInitial">?</div>
+      <div class="profile-header-info">
+        <h1 id="profileName">Loading...</h1>
+        <p>IndiaExamHub Member &nbsp;•&nbsp; <a href="#" onclick="logoutUser()" style="color:#fdba74;">Sign Out</a></p>
+      </div>
+    </div>
+
+    <!-- Library -->
+    <div class="section-head" style="margin-top:0;">
+      <div class="overline">Saved Papers</div>
+      <h2>My Library</h2>
+    </div>
+
+    <div id="library-container"></div>
+
+    <div style="text-align:center; margin-top:32px;">
+      <a href="papers.html" class="btn btn-primary">Browse More Papers</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-bottom" style="max-width:1200px; margin:0 auto;">
+      <span>© 2026 IndiaExamHub</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = getCurrentUser();
+      if (!user) { window.location.href = "login.html"; return; }
+      document.getElementById("profileName").textContent = user;
+      document.getElementById("profileInitial").textContent = user.charAt(0).toUpperCase();
+      loadLibrary("library-container");
+    });
+  </script>
+</body>
+</html>

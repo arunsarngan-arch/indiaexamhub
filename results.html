@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Results – IndiaExamHub</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">IndiaExamHub</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span class="bar top"></span>
+        <span class="bar middle"></span>
+        <span class="bar bottom"></span>
+      </button>
+      <div class="nav-links" id="navLinks"></div>
+    </div>
+  </nav>
+
+  <section class="container">
+    <div class="section-head">
+      <div class="overline">Latest Updates</div>
+      <h2>Exam Results</h2>
+      <p>Live results, scorecards, and merit lists. Dates marked "expected" are approximate.</p>
+    </div>
+
+    <div class="notice-banner">
+      ⚠️ Links open official websites. Always verify from the official conducting body portal.
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="resultSearch" placeholder="Search results by exam name..." />
+    </div>
+
+    <div class="results-table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Exam</th>
+            <th>Result / Update</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="tips-card">
+      <h3>📌 How to Check Your Result</h3>
+      <ul>
+        <li>Click "Check Result" to go to the official website.</li>
+        <li>Keep your roll number / application number and date of birth handy.</li>
+        <li>Download and save your scorecard immediately — portals sometimes go offline.</li>
+        <li>For CBSE/ICSE boards, results are also available on DigiLocker and UMANG app.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">IndiaExamHub</a>
+        <p>Quick access to result links for all major Indian exams.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="papers.html">Papers</a>
+        <a href="jobs.html">Jobs</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 IndiaExamHub</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const statusMap = {
+      live:      { label: "🟢 Live Now", cls: "status-live" },
+      announced: { label: "✅ Announced", cls: "status-announced" },
+      expected:  { label: "🕐 Expected", cls: "status-expected" },
+    };
+
+    function renderResults(list) {
+      const tbody = document.getElementById("resultsBody");
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:40px; color:var(--gray);">No results found.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = list.map(r => {
+        const s = statusMap[r.status] || statusMap.expected;
+        return `
+          <tr>
+            <td><strong>${r.exam}</strong></td>
+            <td>${r.title}</td>
+            <td style="white-space:nowrap; color:var(--gray); font-size:0.88rem;">${r.date}</td>
+            <td><span class="result-status ${s.cls}">${s.label}</span></td>
+            <td>
+              ${r.status !== "expected"
+                ? `<a href="${r.link}" target="_blank" class="btn btn-primary btn-sm">Check Result</a>`
+                : `<span style="color:var(--gray); font-size:0.85rem;">Not yet out</span>`}
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderResults(results);
+
+      document.getElementById("resultSearch").addEventListener("input", e => {
+        const q = e.target.value.toLowerCase();
+        const filtered = results.filter(r =>
+          r.title.toLowerCase().includes(q) || r.exam.toLowerCase().includes(q)
+        );
+        renderResults(filtered);
+      });
+    });
+  </script>
+</body>
+</html>

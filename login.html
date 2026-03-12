@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In – IndiaExamHub</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container" style="justify-content:center;">
+      <a href="index.html" class="logo">IndiaExamHub</a>
+    </div>
+  </nav>
+
+  <div class="auth-container">
+
+    <!-- LOGIN PANEL -->
+    <div id="loginPanel">
+      <div style="background:white; border-radius:20px; overflow:hidden; box-shadow:0 16px 48px rgba(108,64,214,0.18); border:1px solid var(--border);">
+        <div class="auth-split">
+          <!-- Left -->
+          <div class="auth-left">
+            <div class="auth-left-content">
+              <h2>Welcome back to IndiaExamHub</h2>
+              <p>Sign in to access your saved papers, track exam dates, and get personalized alerts.</p>
+              <div class="social-btn" onclick="alert('Google Sign In – coming soon!')">
+                <span class="social-btn-icon">G</span> Continue with Google
+              </div>
+              <div class="social-btn" onclick="alert('Facebook Sign In – coming soon!')">
+                <span class="social-btn-icon">f</span> Continue with Facebook
+              </div>
+              <div class="social-btn" onclick="alert('X Sign In – coming soon!')">
+                <span class="social-btn-icon">✕</span> Continue with X
+              </div>
+            </div>
+          </div>
+          <!-- Right -->
+          <div class="auth-right">
+            <h2>Sign In</h2>
+            <p class="subtext">Enter your username to continue (mock login)</p>
+            <div class="form-group">
+              <span class="field-icon">👤</span>
+              <input type="text" id="login-username" placeholder="Username" />
+            </div>
+            <div class="form-group">
+              <span class="field-icon">🔒</span>
+              <input type="password" id="login-password" placeholder="Password" />
+            </div>
+            <button class="btn btn-primary" style="width:100%; margin-top:6px; justify-content:center;"
+              onclick="loginUser(document.getElementById('login-username').value)">
+              Sign In →
+            </button>
+            <div class="switch-link">
+              New here? <span onclick="showRegister()">Create an account</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTER PANEL -->
+    <div id="registerPanel" style="display:none;">
+      <div style="background:white; border-radius:20px; overflow:hidden; box-shadow:0 16px 48px rgba(108,64,214,0.18); border:1px solid var(--border);">
+        <div class="auth-split">
+          <!-- Left -->
+          <div class="auth-left">
+            <div class="auth-left-content">
+              <h2>Join IndiaExamHub today</h2>
+              <p>Create a free account to save question papers, set exam reminders, and track results.</p>
+              <div class="social-btn" onclick="alert('Google Sign Up – coming soon!')">
+                <span class="social-btn-icon">G</span> Sign up with Google
+              </div>
+              <div class="social-btn" onclick="alert('Facebook Sign Up – coming soon!')">
+                <span class="social-btn-icon">f</span> Sign up with Facebook
+              </div>
+              <div class="social-btn" onclick="alert('X Sign Up – coming soon!')">
+                <span class="social-btn-icon">✕</span> Sign up with X
+              </div>
+            </div>
+          </div>
+          <!-- Right -->
+          <div class="auth-right">
+            <h2>Create Account</h2>
+            <p class="subtext">It's free — always will be</p>
+            <div class="form-group">
+              <span class="field-icon">👤</span>
+              <input type="text" id="reg-name" placeholder="Full Name" />
+            </div>
+            <div class="form-group">
+              <span class="field-icon">📧</span>
+              <input type="email" id="reg-email" placeholder="Email address" />
+            </div>
+            <div class="form-group">
+              <span class="field-icon">🔒</span>
+              <input type="password" id="reg-password" placeholder="Create a password" />
+            </div>
+            <div class="form-group">
+              <span class="field-icon">🔒</span>
+              <input type="password" id="reg-confirm" placeholder="Confirm password" />
+            </div>
+            <button class="btn btn-primary" style="width:100%; margin-top:4px; justify-content:center;"
+              onclick="registerUser(document.getElementById('reg-name').value)">
+              Create Account →
+            </button>
+            <div class="switch-link">
+              Already registered? <span onclick="showLogin()">Sign in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="max-width:1200px; margin:0 auto;">
+      <span>© 2026 IndiaExamHub</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function showRegister() {
+      document.getElementById("loginPanel").style.display = "none";
+      document.getElementById("registerPanel").style.display = "block";
+    }
+    function showLogin() {
+      document.getElementById("registerPanel").style.display = "none";
+      document.getElementById("loginPanel").style.display = "block";
+    }
+  </script>
+</body>
+</html>

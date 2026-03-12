@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IndiaExamHub – Every Indian Exam, One Place</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">IndiaExamHub</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span class="bar top"></span>
+        <span class="bar middle"></span>
+        <span class="bar bottom"></span>
+      </button>
+      <div class="nav-links" id="navLinks"></div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-orb-orange"></div>
+    <div class="container hero-content">
+      <div class="hero-tag">🇮🇳 Made for Indian Students</div>
+      <h1>Every <span>Indian Exam</span>,<br>One Place</h1>
+      <p>Exam dates, previous year papers, results, job notifications — stop switching tabs.</p>
+      <div class="hero-btns">
+        <a href="papers.html" class="btn btn-accent">📄 Question Papers</a>
+        <a href="results.html" class="btn btn-outline">📊 Check Results</a>
+        <a href="jobs.html" class="btn btn-outline">💼 Job Postings</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Major Exams</div></div>
+      <div class="stat-item"><div class="stat-num">25+</div><div class="stat-label">PYQ Papers</div></div>
+      <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Results Listed</div></div>
+      <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Always</div></div>
+    </div>
+  </section>
+
+  <!-- Exams Section -->
+  <section class="container">
+    <div class="section-head">
+      <div class="overline">2025–2026 Schedule</div>
+      <h2>Major Exams in India</h2>
+      <p>Tentative dates. Always verify on official websites before applying.</p>
+    </div>
+
+    <div class="notice-banner">
+      ⚠️ <span>Dates are approximate / tentative. Check official conducting body websites before relying on them.</span>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" id="categoryTabs">
+      <button class="filter-tab active" data-cat="">All</button>
+      <button class="filter-tab" data-cat="Engineering UG">Engineering UG</button>
+      <button class="filter-tab" data-cat="Medical UG">Medical</button>
+      <button class="filter-tab" data-cat="Civil Services">Civil Services</button>
+      <button class="filter-tab" data-cat="Banking">Banking</button>
+      <button class="filter-tab" data-cat="Government">SSC / Govt</button>
+      <button class="filter-tab" data-cat="Railways">Railways</button>
+      <button class="filter-tab" data-cat="School">School Boards</button>
+      <button class="filter-tab" data-cat="MBA">MBA</button>
+      <button class="filter-tab" data-cat="Teaching">Teaching</button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search exams, e.g. JEE, NEET, CBSE, UPSC..." />
+    </div>
+
+    <div class="cards-grid" id="examsGrid"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">IndiaExamHub</a>
+        <p>A one-stop resource hub for Indian students — exam dates, papers, results and job postings in one place.</p>
+        <div class="footer-subscribe" style="margin-top:20px;">
+          <input type="email" placeholder="Get exam alerts by email" />
+          <button onclick="alert('Subscribed! (mock)')">Subscribe</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="papers.html">Question Papers</a>
+        <a href="results.html">Results</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="profile.html">My Library</a>
+      </div>
+      <div class="footer-col">
+        <h4>Exam Categories</h4>
+        <a href="papers.html">Engineering (JEE, GATE)</a>
+        <a href="papers.html">Medical (NEET)</a>
+        <a href="papers.html">Civil Services (UPSC)</a>
+        <a href="papers.html">Banking (IBPS, SBI)</a>
+        <a href="papers.html">School Boards (CBSE)</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 IndiaExamHub – Made with ❤️ for students</span>
+      <span>Data sourced from official conducting bodies</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("examsGrid");
+
+      function renderExams(list) {
+        if (list.length === 0) {
+          grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🔍</div><p>No exams match your search.</p></div>`;
+          return;
+        }
+        grid.innerHTML = list.map(exam => `
+          <div class="card" data-cat="${exam.category}">
+            <div class="card-header ${exam.theme}">
+              <div class="card-header-icon">${exam.icon}</div>
+              <div class="card-category-badge">${exam.category}</div>
+            </div>
+            <div class="card-body">
+              <div class="card-title">${exam.name}</div>
+              <div class="card-subtitle">${exam.body}</div>
+              <div class="card-detail-row">
+                <div class="card-detail-label">Exam</div>
+                <div class="card-detail-value">${exam.tentativeExam}</div>
+              </div>
+              <div class="card-detail-row">
+                <div class="card-detail-label">Result</div>
+                <div class="card-detail-value">${exam.tentativeResult}</div>
+              </div>
+              <div class="card-note">💡 ${exam.notes}</div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      renderExams(exams);
+
+      // Category filter tabs
+      document.querySelectorAll(".filter-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".filter-tab").forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          const cat = tab.dataset.cat;
+          const searchVal = document.getElementById("searchInput").value.toLowerCase();
+          filterExams(cat, searchVal);
+        });
+      });
+
+      // Search
+      document.getElementById("searchInput").addEventListener("input", e => {
+        const activeCat = document.querySelector(".filter-tab.active")?.dataset.cat || "";
+        filterExams(activeCat, e.target.value.toLowerCase());
+      });
+
+      function filterExams(cat, query) {
+        const filtered = exams.filter(exam => {
+          const matchCat = !cat || exam.category.includes(cat);
+          const matchQuery = !query || exam.name.toLowerCase().includes(query) || exam.category.toLowerCase().includes(query) || exam.body.toLowerCase().includes(query);
+          return matchCat && matchQuery;
+        });
+        renderExams(filtered);
+      }
+    });
+  </script>
+</body>
+</html>
