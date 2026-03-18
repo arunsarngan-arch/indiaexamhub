@@ -30,10 +30,35 @@
       </div>
     </div>
 
+    <!-- Quick Actions -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 40px 0;">
+      <a href="dashboard.html" style="text-decoration: none;">
+        <div class="profile-action-card">
+          <div class="action-icon">📊</div>
+          <h3>Academic Dashboard</h3>
+          <p>View your timetable, attendance, assignments & grades</p>
+          <div class="action-arrow">→</div>
+        </div>
+      </a>
+      <div class="profile-action-card" onclick="alert('Settings coming soon!')">
+        <div class="action-icon">⚙️</div>
+        <h3>Settings</h3>
+        <p>Manage your profile, notifications & preferences</p>
+        <div class="action-arrow">→</div>
+      </div>
+      <div class="profile-action-card" onclick="alert('Help center coming soon!')">
+        <div class="action-icon">❓</div>
+        <h3>Help & Support</h3>
+        <p>Get answers to common questions & reach support</p>
+        <div class="action-arrow">→</div>
+      </div>
+    </div>
+
     <!-- Library -->
-    <div class="section-head" style="margin-top:0;">
+    <div class="section-head" style="margin-top: 60px;">
       <div class="overline">Saved Papers</div>
       <h2>My Library</h2>
+      <p>Your collection of downloaded exam papers and study materials</p>
     </div>
 
     <div id="library-container"></div>
@@ -43,9 +68,92 @@
     </div>
   </section>
 
+  <style>
+    .profile-action-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-action-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(108, 64, 214, 0.05), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .profile-action-card:hover::before {
+      left: 100%;
+    }
+
+    .profile-action-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 12px 32px rgba(108, 64, 214, 0.12);
+      transform: translateY(-4px);
+    }
+
+    .action-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .profile-action-card h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .profile-action-card p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: 12px;
+    }
+
+    .action-arrow {
+      color: var(--primary);
+      font-size: 1.2rem;
+      font-weight: 800;
+      transition: transform 0.3s ease;
+      align-self: flex-start;
+    }
+
+    .profile-action-card:hover .action-arrow {
+      transform: translateX(4px);
+    }
+  </style>
+
   <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">IndiaExamHub</a>
+        <p>Your personal academic companion — stay organized, stay ahead.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="papers.html">Papers</a>
+        <a href="results.html">Results</a>
+        <a href="jobs.html">Jobs</a>
+      </div>
+    </div>
     <div class="footer-bottom" style="max-width:1200px; margin:0 auto;">
-      <span>© 2026 IndiaExamHub</span>
+      <span>© 2026 IndiaExamHub – Made with ❤️ for students</span>
     </div>
   </footer>
 

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard – IndiaExamHub</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="styleDash.css"/>
+  <link rel="stylesheet" href="dashboard-editable-v3.css"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">IndiaExamHub</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span class="bar top"></span>
+        <span class="bar middle"></span>
+        <span class="bar bottom"></span>
+      </button>
+      <div class="nav-links" id="navLinks"></div>
+    </div>
+  </nav>
+
+  <section class="container">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <div class="dashboard-header-left">
+        <div class="dashboard-welcome">
+          <div class="dashboard-title">
+            <h1>📚 Your Academic Dashboard</h1>
+            <p id="timeGreeting" class="greeting-time"></p>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-header-right">
+        <div class="dashboard-quick-stats">
+          <div class="quick-stat quick-stat-1">
+            <div class="quick-stat-icon">📊</div>
+            <div class="quick-stat-text">
+              <div class="quick-stat-label">Overall GPA</div>
+              <div class="quick-stat-value">3.87</div>
+            </div>
+          </div>
+          <div class="quick-stat quick-stat-2">
+            <div class="quick-stat-icon">⏰</div>
+            <div class="quick-stat-text">
+              <div class="quick-stat-label">Upcoming</div>
+              <div class="quick-stat-value">5 Classes</div>
+            </div>
+          </div>
+          <div class="quick-stat quick-stat-3">
+            <div class="quick-stat-icon">✅</div>
+            <div class="quick-stat-text">
+              <div class="quick-stat-label">Attendance</div>
+              <div class="quick-stat-value">94%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dashboard Grid: 3 Columns -->
+    <div class="dashboard-grid-new">
+
+      <!-- COLUMN 1: Calendar & Performance -->
+      <div class="dashboard-col-1">
+
+        <!-- Calendar -->
+        <div class="dashboard-card mini-calendar-card">
+          <div class="dashboard-card-header">
+            <h2>📆 Calendar</h2>
+          </div>
+          
+          <div class="calendar-info">
+            <p style="color: var(--gray); font-size: 0.85rem; margin-bottom: 12px;">
+              📌 Click a date to add Exams, Classes, or Assignments
+            </p>
+          </div>
+
+          <div class="mini-calendar" id="miniCalendar"></div>
+          
+          <div class="calendar-legend">
+            <div class="legend-item"><span class="legend-dot legend-class"></span> Classes</div>
+            <div class="legend-item"><span class="legend-dot legend-exam"></span> Exams</div>
+            <div class="legend-item"><span class="legend-dot legend-assignment"></span> Assignment</div>
+          </div>
+
+          <div id="calendarFormContainer" style="display: none;" class="calendar-data-entry">
+            <div class="form-header">
+              <h4>Add Entry for <span id="selectedDateDisplay"></span></h4>
+              <button class="close-btn" onclick="closeCalendarForm()">×</button>
+            </div>
+
+            <div class="form-body">
+              <div class="form-group">
+                <label>Category *</label>
+                <select id="entryType" onchange="updateFormFields()">
+                  <option value="">Select Category</option>
+                  <option value="class">Classes</option>
+                  <option value="exam">Exam</option>
+                  <option value="assignment">Assignment</option>
+                </select>
+              </div>
+
+              <div id="classFields" style="display: none;">
+                <div class="form-group">
+                  <label>Subject *</label>
+                  <input type="text" id="className" placeholder="e.g., Data Structures" />
+                </div>
+                <div class="form-group">
+                  <label>Timing *</label>
+                  <input type="time" id="classTime" />
+                </div>
+                <div class="form-group">
+                  <label>Add Details</label>
+                  <textarea id="classDetails" placeholder="Room, Instructor, etc."></textarea>
+                </div>
+              </div>
+
+              <div id="examFields" style="display: none;">
+                <div class="form-group">
+                  <label>Subject *</label>
+                  <input type="text" id="examSubject" placeholder="e.g., JEE Main" />
+                </div>
+                <div class="form-group">
+                  <label>Add Details</label>
+                  <textarea id="examDetails" placeholder="Exam body, duration, syllabus, etc."></textarea>
+                </div>
+              </div>
+
+              <div id="assignmentFields" style="display: none;">
+                <div class="form-group">
+                  <label>Subject *</label>
+                  <input type="text" id="assignmentSubject" placeholder="e.g., Data Structures" />
+                </div>
+                <div class="form-group">
+                  <label>Due Date *</label>
+                  <input type="date" id="assignmentDueDate" />
+                </div>
+                <div class="form-group">
+                  <label>Add Details</label>
+                  <textarea id="assignmentDetails" placeholder="Description, requirements, etc."></textarea>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" onclick="saveCalendarEntry()" style="width: 100%; margin-top: 12px;">Save Entry</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance -->
+        <div class="dashboard-card performance-card">
+          <div class="dashboard-card-header">
+            <h2>📊 Performance</h2>
+          </div>
+          <div class="subject-performance" id="subjectPerformance"></div>
+        </div>
+
+      </div>
+
+      <!-- COLUMN 2: Today's Classes, Assignments, Announcements -->
+      <div class="dashboard-col-2">
+
+        <!-- Today's Classes -->
+        <div class="dashboard-card timetable-card">
+          <div class="dashboard-card-header">
+            <h2>📅 Today's Classes</h2>
+            <div class="header-badge" id="todayDate"></div>
+            <button class="edit-btn" onclick="toggleEditMode('timetable')" title="Edit mode">
+              <span class="edit-icon">✏️</span>
+            </button>
+          </div>
+
+          <div id="timetableEditMode" style="display: none;" class="edit-mode-notice">
+            <p>📝 Editing Mode - Click Edit or Remove on items</p>
+          </div>
+
+          <div class="timetable-container" id="timetableContainer"></div>
+
+          <div id="timetableEditControls" style="display: none;" class="edit-controls">
+            <button class="btn btn-reset" onclick="resetChanges('timetable')">Reset</button>
+            <button class="btn btn-primary" onclick="saveChanges('timetable')">Save</button>
+          </div>
+
+          <div class="section-footer">
+            <p style="color: var(--gray); font-size: 0.85rem;">ℹ️ Add/Edit classes in Calendar</p>
+          </div>
+        </div>
+
+        <!-- Assignments -->
+        <div class="dashboard-card assignments-card">
+          <div class="dashboard-card-header">
+            <h2>📝 Assignments</h2>
+            <div class="header-filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="urgent">Urgent</button>
+              <button class="filter-btn" data-filter="completed">Done</button>
+            </div>
+            <button class="edit-btn" onclick="toggleEditMode('assignments')" title="Edit mode">
+              <span class="edit-icon">✏️</span>
+            </button>
+          </div>
+
+          <div id="assignmentsEditMode" style="display: none;" class="edit-mode-notice">
+            <p>📝 Editing Mode - Click Edit or Remove on items</p>
+          </div>
+
+          <div class="assignments-list" id="assignmentsList"></div>
+
+          <div id="assignmentsEditControls" style="display: none;" class="edit-controls">
+            <button class="btn btn-reset" onclick="resetChanges('assignments')">Reset</button>
+            <button class="btn btn-primary" onclick="saveChanges('assignments')">Save</button>
+          </div>
+
+          <div class="section-footer">
+            <p style="color: var(--gray); font-size: 0.85rem;">ℹ️ Add assignments in Calendar</p>
+          </div>
+        </div>
+
+        <!-- Announcements -->
+        <div class="dashboard-card announcements-card">
+          <div class="dashboard-card-header">
+            <h2>📢 Announcements</h2>
+          </div>
+          <div class="announcements-list" id="announcementsList"></div>
+        </div>
+
+      </div>
+
+      <!-- COLUMN 3: Upcoming Exams, Attendance -->
+      <div class="dashboard-col-3">
+
+        <!-- Upcoming Exams -->
+        <div class="dashboard-card exams-card">
+          <div class="dashboard-card-header">
+            <h2>🎯 Upcoming Exams</h2>
+            <button class="edit-btn" onclick="toggleEditMode('exams')" title="Edit mode">
+              <span class="edit-icon">✏️</span>
+            </button>
+          </div>
+
+          <div id="examsEditMode" style="display: none;" class="edit-mode-notice">
+            <p>📝 Editing Mode - Click Edit or Remove on items</p>
+          </div>
+
+          <div class="exams-timeline" id="examsTimeline"></div>
+
+          <div id="examsEditControls" style="display: none;" class="edit-controls">
+            <button class="btn btn-reset" onclick="resetChanges('exams')">Reset</button>
+            <button class="btn btn-primary" onclick="saveChanges('exams')">Save</button>
+          </div>
+
+          <div class="section-footer">
+            <p style="color: var(--gray); font-size: 0.85rem;">ℹ️ Add exams in Calendar</p>
+          </div>
+        </div>
+
+        <!-- Attendance -->
+        <div class="dashboard-card attendance-card">
+          <div class="dashboard-card-header">
+            <h2>📈 Attendance</h2>
+          </div>
+
+          <div class="attendance-overview">
+            <div class="attendance-circle">
+              <svg class="attendance-chart" viewBox="0 0 120 120">
+                <circle class="attendance-bg" cx="60" cy="60" r="54"></circle>
+                <circle class="attendance-fill" cx="60" cy="60" r="54" style="stroke-dasharray: 270.8, 339.3;"></circle>
+              </svg>
+              <div class="attendance-center">
+                <div class="attendance-percent" id="attendancePercent">94%</div>
+                <div class="attendance-label">Present</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="attendance-breakdown">
+            <div class="attendance-stat">
+              <div class="attendance-stat-label">Present</div>
+              <div class="attendance-stat-value" id="presentCount">47/50</div>
+              <div class="attendance-stat-bar">
+                <div class="stat-bar-fill" style="width: 94%; background: #059669;"></div>
+              </div>
+            </div>
+            <div class="attendance-stat">
+              <div class="attendance-stat-label">Absent</div>
+              <div class="attendance-stat-value" id="absentCount">3/50</div>
+              <div class="attendance-stat-bar">
+                <div class="stat-bar-fill" style="width: 6%; background: #dc2626;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="attendance-note">
+            ⚠️ Maintain 75% to be eligible for exams
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">IndiaExamHub</a>
+        <p>Your personal academic companion — stay organized, stay ahead.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="papers.html">Papers</a>
+        <a href="results.html">Results</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 IndiaExamHub – Made with ❤️ for students</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="dashboard-editable-v3.js"></script>
+</body>
+</html>
