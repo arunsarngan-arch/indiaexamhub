@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Resources – IndiaExamHub</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="dark-mode.css"/>
+  <style>
+    /* Centered search bar wrapper */
+    .search-wrap-centered {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .search-wrap-centered .search-wrap {
+      max-width: 600px !important;
+      width: 100%;
+      margin: 0 !important;
+    }
+
+    .resource-filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+      justify-content: center;
+    }
+    .resource-filter-btn {
+      padding: 10px 16px;
+      border: 2px solid var(--border);
+      background: white;
+      border-radius: 24px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      color: var(--text);
+    }
+    .resource-filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .resource-filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 32px 0;
+    }
+    .resource-card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .resource-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-6px);
+    }
+    .resource-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .resource-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+    .resource-meta {
+      flex: 1;
+    }
+    .resource-type-badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .resource-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .resource-category {
+      font-size: 0.85rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    .resource-rating {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+    .resource-desc {
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 12px 0;
+      flex: 1;
+    }
+    .resource-meta-info {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+    .resource-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .tag {
+      background: var(--muted-purple);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .tag.popular {
+      background: linear-gradient(135deg, var(--accent-light), #fed7aa);
+      color: var(--accent);
+    }
+    .resource-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .resource-footer-info {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+    .free-badge {
+      color: var(--success);
+      font-weight: 700;
+      background: rgba(5, 150, 105, 0.1);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+    }
+    .resource-btn {
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .empty-resources {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 640px) {
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+      .resource-filter-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">IndiaExamHub</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span class="bar top"></span>
+        <span class="bar middle"></span>
+        <span class="bar bottom"></span>
+      </button>
+      <div class="nav-links" id="navLinks"></div>
+      <div class="profile-container" id="profileContainer"></div>
+    </div>
+  </nav>
+
+  <section class="container">
+    <div class="section-head">
+      <div class="overline">Free Learning Materials</div>
+      <h2>Study Resources</h2>
+      <p>Curated collection of free & premium resources to help you ace your exam</p>
+    </div>
+
+    <div class="search-wrap-centered">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="resourceSearch" placeholder="Search resources by name, exam, or type..." />
+      </div>
+    </div>
+
+    <div class="resource-filter-tabs">
+      <button class="resource-filter-btn active" data-type="all">All Resources</button>
+      <button class="resource-filter-btn" data-type="YouTube">🎥 YouTube</button>
+      <button class="resource-filter-btn" data-type="Platform">📱 Platforms</button>
+      <button class="resource-filter-btn" data-type="Book">📚 Books</button>
+      <button class="resource-filter-btn" data-type="Website">🌐 Websites</button>
+    </div>
+
+    <div id="resourcesGrid" class="resources-grid"></div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">IndiaExamHub</a>
+        <p>Free resources curated for Indian exam aspirants.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="papers.html">Papers</a>
+        <a href="results.html">Results</a>
+        <a href="compare.html">Compare Exams</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 IndiaExamHub</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Study Resources Data
+    const studyResources = [
+      // YouTube Channels
+      {
+        id: 1,
+        type: "YouTube",
+        name: "Physics Wallah",
+        category: "Physics, Chemistry, Math (All Levels)",
+        exams: ["JEE Main", "JEE Advanced", "NEET", "CBSE", "ICSE"],
+        description: "Free high-quality lectures on Physics, Chemistry & Math by Alakh Pandey. Covers JEE, NEET & board exams.",
+        subscribers: "8M+",
+        rating: 4.9,
+        url: "https://www.youtube.com/@PhysicsWallah",
+        icon: "🎥",
+        free: true,
+        popular: true
+      },
+      {
+        id: 2,
+        type: "YouTube",
+        name: "Unacademy",
+        category: "All Competitive Exams",
+        exams: ["UPSC", "SSC", "Banking", "JEE", "NEET", "GATE"],
+        description: "Comprehensive video lectures for competitive exams. Best for UPSC, SSC, Banking with live classes.",
+        subscribers: "25M+",
+        rating: 4.7,
+        url: "https://www.youtube.com/@UnacademyGSC",
+        icon: "🎥",
+        free: true,
+        popular: true
+      },
+      {
+        id: 3,
+        type: "YouTube",
+        name: "Adda247",
+        category: "Government & Banking Exams",
+        exams: ["SSC", "Banking", "Railway", "UPSC"],
+        description: "Daily current affairs updates & preparation tips for government exams. Quick revision videos.",
+        subscribers: "12M+",
+        rating: 4.7,
+        url: "https://www.youtube.com/@adda247official",
+        icon: "🎥",
+        free: true
+      },
+      {
+        id: 4,
+        type: "YouTube",
+        name: "StudyIQ",
+        category: "UPSC & Government Exams",
+        exams: ["UPSC", "SSC", "Banking", "Teaching"],
+        description: "Focus on UPSC preparation. Daily current affairs & answer writing sessions.",
+        subscribers: "7M+",
+        rating: 4.6,
+        url: "https://www.youtube.com/@StudyIQ",
+        icon: "🎥",
+        free: true
+      },
+      {
+        id: 5,
+        type: "YouTube",
+        name: "Khan Academy",
+        category: "Math, Physics, Chemistry, Biology",
+        exams: ["CBSE", "ICSE", "JEE", "NEET", "AP"],
+        description: "Free world-class education. Perfect for building strong fundamentals in math & science.",
+        subscribers: "20M+",
+        rating: 4.8,
+        url: "https://www.youtube.com/@khanacademy",
+        icon: "🎥",
+        free: true,
+        popular: true
+      },
+      {
+        id: 6,
+        type: "YouTube",
+        name: "Vedantu",
+        category: "CBSE, ICSE, JEE, NEET",
+        exams: ["CBSE", "ICSE", "JEE Main", "NEET"],
+        description: "Live interactive classes with expert teachers. Real-time doubt solving sessions.",
+        subscribers: "18M+",
+        rating: 4.5,
+        url: "https://www.youtube.com/@vedantu",
+        icon: "🎥",
+        free: true
+      },
+
+      // Online Platforms
+      {
+        id: 7,
+        type: "Platform",
+        name: "Testbook",
+        category: "Mock Tests & Courses",
+        exams: ["SSC", "Banking", "Railway", "Teaching"],
+        description: "Extensive mock test series & courses. Live classes & detailed solutions.",
+        rating: 4.6,
+        url: "https://testbook.com",
+        icon: "📱",
+        free: false,
+        paidFeature: "Complete courses with live support"
+      },
+      {
+        id: 8,
+        type: "Platform",
+        name: "Gradeup",
+        category: "Technical & Govt Exams",
+        exams: ["GATE", "ESE", "SSC", "Banking"],
+        description: "Best for technical exams. Strong discussion forums for doubt resolution.",
+        rating: 4.5,
+        url: "https://www.gradeup.co",
+        icon: "📱",
+        free: false,
+        paidFeature: "Advanced tests & solutions"
+      },
+      {
+        id: 9,
+        type: "Platform",
+        name: "Byju's",
+        category: "School & Competitive Exams",
+        exams: ["CBSE", "ICSE", "JEE", "NEET"],
+        description: "AI-powered learning with animated video lessons. Personalized study paths.",
+        rating: 4.3,
+        url: "https://www.byjus.com",
+        icon: "📱",
+        free: false,
+        paidFeature: "Full course access & live tuition"
+      },
+      {
+        id: 10,
+        type: "Platform",
+        name: "Toppr",
+        category: "School & Competitive Exams",
+        exams: ["CBSE", "ICSE", "JEE", "NEET"],
+        description: "Interactive learning platform with adaptive tests. Covers K-12 to competitive exams.",
+        rating: 4.4,
+        url: "https://www.toppr.com",
+        icon: "📱",
+        free: false,
+        paidFeature: "Unlimited practice & personalized learning"
+      },
+
+      // Books
+      {
+        id: 11,
+        type: "Book",
+        name: "NCERT Textbooks (All Subjects)",
+        category: "School & College Foundation",
+        exams: ["CBSE", "ICSE", "JEE", "NEET"],
+        description: "Official government textbooks. The foundation for all competitive exams. Free PDF available.",
+        rating: 4.9,
+        url: "https://ncert.nic.in",
+        icon: "📚",
+        free: true,
+        popular: true,
+        format: "PDF + Physical"
+      },
+      {
+        id: 12,
+        type: "Book",
+        name: "HC Verma - Concepts of Physics",
+        category: "Physics (JEE)",
+        exams: ["JEE Main", "JEE Advanced", "CBSE Class 11-12"],
+        description: "The most trusted physics book. Excellent for conceptual clarity & problem solving.",
+        rating: 4.8,
+        url: "https://amazon.in",
+        icon: "📚",
+        free: false,
+        price: "₹750-900"
+      },
+      {
+        id: 13,
+        type: "Book",
+        name: "MS Chauhan - Organic Chemistry",
+        category: "Chemistry (JEE)",
+        exams: ["JEE Main", "JEE Advanced"],
+        description: "Best for organic chemistry mechanisms. Clear explanations with practice problems.",
+        rating: 4.7,
+        url: "https://amazon.in",
+        icon: "📚",
+        free: false,
+        price: "₹600-700"
+      },
+      {
+        id: 14,
+        type: "Book",
+        name: "Lucent General Knowledge",
+        category: "General Knowledge",
+        exams: ["SSC", "Banking", "Railway", "UPSC"],
+        description: "Comprehensive GK reference book. Essential for all government exams.",
+        rating: 4.7,
+        url: "https://amazon.in",
+        icon: "📚",
+        free: false,
+        price: "₹350-400"
+      },
+      {
+        id: 15,
+        type: "Book",
+        name: "Arihant Biology (NEET)",
+        category: "Biology (NEET)",
+        exams: ["NEET", "CBSE Class 11-12"],
+        description: "Complete NEET preparation. Theory, diagrams, MCQs & detailed solutions.",
+        rating: 4.6,
+        url: "https://amazon.in",
+        icon: "📚",
+        free: false,
+        price: "₹900-1100"
+      },
+      {
+        id: 16,
+        type: "Book",
+        name: "RS Aggarwal - Mathematics",
+        category: "Mathematics (All Levels)",
+        exams: ["CBSE", "JEE", "Various Govt Exams"],
+        description: "Comprehensive math problems with solutions. Perfect for practice.",
+        rating: 4.5,
+        url: "https://amazon.in",
+        icon: "📚",
+        free: false,
+        price: "₹400-500"
+      },
+
+      // Websites
+      {
+        id: 17,
+        type: "Website",
+        name: "Official UPSC Portal",
+        category: "Civil Services",
+        exams: ["UPSC CSE", "UPSC CDS", "UPSC NDA"],
+        description: "Official notifications, syllabus & past papers. Direct from UPSC.",
+        rating: 5.0,
+        url: "https://www.upsc.gov.in",
+        icon: "🌐",
+        free: true,
+        popular: true
+      },
+      {
+        id: 18,
+        type: "Website",
+        name: "Sarkari Result",
+        category: "Govt Job News & Updates",
+        exams: ["All Government Exams"],
+        description: "Latest government exam notifications & results. Comprehensive job portal.",
+        rating: 4.7,
+        url: "https://www.sarkariresult.com",
+        icon: "🌐",
+        free: true
+      },
+      {
+        id: 19,
+        type: "Website",
+        name: "NTA Official (NEET, JEE, CUET)",
+        category: "National Entrance Exams",
+        exams: ["JEE Main", "NEET", "CUET"],
+        description: "Official notifications & information for NTA exams. Download admit cards & results.",
+        rating: 4.9,
+        url: "https://nta.ac.in",
+        icon: "🌐",
+        free: true,
+        popular: true
+      },
+      {
+        id: 20,
+        type: "Website",
+        name: "IBPS Official Portal",
+        category: "Banking Exams",
+        exams: ["IBPS PO", "IBPS Clerk", "IBPS RRB"],
+        description: "Official banking recruitment portal. Notifications, admit cards & results.",
+        rating: 4.8,
+        url: "https://www.ibps.in",
+        icon: "🌐",
+        free: true
+      },
+      {
+        id: 21,
+        type: "Website",
+        name: "GeeksforGeeks",
+        category: "DSA & Programming",
+        exams: ["Gate CSE", "Technical Interviews"],
+        description: "Excellent for Data Structures & Algorithms. Free coding tutorials.",
+        rating: 4.6,
+        url: "https://www.geeksforgeeks.org",
+        icon: "🌐",
+        free: true
+      },
+      {
+        id: 22,
+        type: "Website",
+        name: "Doubtnut",
+        category: "Video Solutions for Doubts",
+        exams: ["CBSE", "ICSE", "JEE", "NEET"],
+        description: "Video solutions to textbook questions. Quick doubt resolution.",
+        rating: 4.5,
+        url: "https://www.doubtnut.com",
+        icon: "🌐",
+        free: true
+      }
+    ];
+
+    function renderResources(resources) {
+      const container = document.getElementById("resourcesGrid");
+      
+      if (resources.length === 0) {
+        container.innerHTML = `
+          <div class="empty-resources" style="grid-column: 1/-1;">
+            <div class="empty-icon">🔍</div>
+            <h3>No resources found</h3>
+            <p>Try a different search or filter</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = resources.map(resource => `
+        <div class="resource-card">
+          <div class="resource-header">
+            <div class="resource-icon">${resource.icon}</div>
+            <div class="resource-meta">
+              <div class="resource-type-badge">${resource.type}</div>
+              <div class="resource-name">${resource.name}</div>
+              <div class="resource-category">${resource.category}</div>
+              <div class="resource-rating">⭐ ${resource.rating}</div>
+            </div>
+          </div>
+
+          <p class="resource-desc">${resource.description}</p>
+
+          <div class="resource-meta-info">
+            ${resource.subscribers ? `📊 ${resource.subscribers} subscribers<br>` : ""}
+            ${resource.price ? `💰 ${resource.price}<br>` : ""}
+            ${resource.paidFeature ? `✨ ${resource.paidFeature}<br>` : ""}
+            ${resource.format ? `📦 ${resource.format}` : ""}
+          </div>
+
+          <div class="resource-tags">
+            ${resource.exams.slice(0, 3).map(e => `<span class="tag${resource.popular ? ' popular' : ''}">${e}</span>`).join("")}
+            ${resource.exams.length > 3 ? `<span class="tag">+${resource.exams.length - 3} more</span>` : ""}
+            ${resource.free ? `<span class="tag" style="background: rgba(5,150,105,0.1); color: var(--success);">FREE</span>` : ""}
+          </div>
+
+          <div class="resource-footer">
+            <div class="resource-footer-info">
+              ${resource.free ? '<span class="free-badge">✓ FREE</span>' : '<span style="color: var(--accent); font-weight: 600;">💳 PAID</span>'}
+            </div>
+            <a href="${resource.url}" target="_blank" class="btn btn-primary resource-btn">
+              Visit →
+            </a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function applyFilters() {
+      const activeType = document.querySelector(".resource-filter-btn.active").dataset.type;
+      const searchQuery = document.getElementById("resourceSearch").value.toLowerCase();
+
+      let filtered = studyResources;
+
+      if (activeType !== "all") {
+        filtered = filtered.filter(r => r.type === activeType);
+      }
+
+      if (searchQuery) {
+        filtered = filtered.filter(r =>
+          r.name.toLowerCase().includes(searchQuery) ||
+          r.category.toLowerCase().includes(searchQuery) ||
+          r.exams.some(e => e.toLowerCase().includes(searchQuery)) ||
+          r.description.toLowerCase().includes(searchQuery)
+        );
+      }
+
+      renderResources(filtered);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Nav links
+      const navLinks = document.getElementById("navLinks");
+      navLinks.innerHTML = `
+        <a href="index.html">Home</a>
+        <a href="papers.html">Papers</a>
+        <a href="results.html">Results</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="compare.html">Compare</a>
+        <a href="resources.html" class="active">Resources</a>
+      `;
+
+      // Profile container
+      const profileContainer = document.getElementById("profileContainer");
+      const user = getCurrentUser();
+      if (user) {
+        profileContainer.innerHTML = `
+          <a href="profile.html" class="profile-avatar" title="Go to Profile">
+            ${user.charAt(0).toUpperCase()}
+          </a>
+        `;
+      }
+
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menuToggle");
+      menuToggle?.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        navLinks.classList.toggle("active");
+      });
+
+      // Filter buttons
+      document.querySelectorAll(".resource-filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".resource-filter-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          applyFilters();
+        });
+      });
+
+      // Search
+      document.getElementById("resourceSearch").addEventListener("input", applyFilters);
+
+      // Initial render
+      renderResources(studyResources);
+    });
+  </script>
+  <script src="dark-mode-countdown.js"></script>
+</body>
+</html>

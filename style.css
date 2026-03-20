@@ -49,10 +49,11 @@ body {
 }
 
 .nav-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   height: 100%;
+  gap: 20px;
 }
 
 .logo {
@@ -65,12 +66,45 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  flex: 1;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid var(--border);
+  text-decoration: none;
+}
+
+.profile-avatar:hover {
+  box-shadow: 0 4px 12px rgba(108, 64, 214, 0.3);
+  transform: scale(1.05);
 }
 
 .nav-links a {
@@ -112,6 +146,8 @@ body {
   transition: background 0.2s;
   position: relative;
   z-index: 210;
+  grid-column: 2;
+  justify-self: start;
 }
 .menu-toggle:hover { background: var(--muted-purple); }
 
@@ -129,6 +165,43 @@ body {
 .menu-toggle.active .top    { transform: translateY(9px) rotate(45deg); }
 .menu-toggle.active .middle { opacity: 0; transform: scaleX(0.1); }
 .menu-toggle.active .bottom { transform: translateY(-9px) rotate(-45deg); }
+
+/* Mobile responsive navbar */
+@media (max-width: 1024px) {
+  .nav-container {
+    grid-template-columns: auto auto auto;
+    gap: 12px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .nav-links.active {
+    display: flex;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: white;
+    border-bottom: 2px solid var(--border);
+    padding: 12px;
+    gap: 4px;
+    z-index: 200;
+    justify-content: flex-start;
+  }
+  
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-container {
+    margin-left: 0;
+  }
+}
 
 /* ──────────── HERO ──────────── */
 .hero {

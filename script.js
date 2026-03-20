@@ -417,6 +417,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="papers.html">Papers</a>
         <a href="results.html">Results <span class="nav-badge">NEW</span></a>
         <a href="jobs.html">Jobs</a>
+        <a href="compare.html">Compare</a>
+        <a href="resources.html">Resources</a>
         <div id="profileDropdownWrap">
           <a href="#" id="profileTrigger" style="display:flex;align-items:center;text-decoration:none;padding:0 8px;">
             <div class="profile-avatar">${initial}</div>

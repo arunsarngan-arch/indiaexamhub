@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Jobs in India – IndiaExamHub</title>
   <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="dark-mode.css"/>
 </head>
 <body>
 
@@ -17,6 +18,7 @@
         <span class="bar bottom"></span>
       </button>
       <div class="nav-links" id="navLinks"></div>
+      <div class="profile-container" id="profileContainer"></div>
     </div>
   </nav>
 
@@ -134,6 +136,35 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      // Nav links
+      const navLinks = document.getElementById("navLinks");
+      navLinks.innerHTML = `
+        <a href="index.html">Home</a>
+        <a href="papers.html">Papers</a>
+        <a href="results.html">Results</a>
+        <a href="jobs.html" class="active">Jobs</a>
+        <a href="compare.html">Compare</a>
+        <a href="resources.html">Resources</a>
+      `;
+
+      // Profile container
+      const profileContainer = document.getElementById("profileContainer");
+      const user = getCurrentUser();
+      if (user) {
+        profileContainer.innerHTML = `
+          <a href="profile.html" class="profile-avatar" title="Go to Profile">
+            ${user.charAt(0).toUpperCase()}
+          </a>
+        `;
+      }
+
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menuToggle");
+      menuToggle?.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        navLinks.classList.toggle("active");
+      });
+
       applyJobFilters();
       ["jobSearch", "sectorFilter"].forEach(id => {
         const el = document.getElementById(id);
@@ -141,5 +172,6 @@
       });
     });
   </script>
+  <script src="dark-mode-countdown.js"></script>
 </body>
 </html>

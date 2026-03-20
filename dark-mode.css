@@ -1,0 +1,377 @@
+/* ════════════════════════════════════════════════════════════════
+   Dark Mode Theme for IndiaExamHub
+   Add this to your style.css or link it separately
+   ═════════════════════════════════════════════════════════════════ */
+
+/* Dark Theme Colors */
+:root[data-theme="dark"] {
+  --primary:              #a78bfa;   /* lighter purple for visibility */
+  --primary-light:        #c4b5fd;
+  --primary-dark:         #8b5cf6;
+  --accent:               #f97316;   /* stays vibrant in dark */
+  --accent-light:         #fb923c;
+  --success:              #10b981;   /* adjusted green */
+  --danger:               #ef4444;   /* adjusted red */
+  --light-bg:             #0f172a;   /* dark navy */
+  --card-bg:              #1e293b;   /* slightly lighter */
+  --muted-purple:         #1e1b4b;   /* dark purple */
+  --muted-orange:         #3f2817;   /* dark orange */
+  --dark:                 #f1f5f9;   /* light text */
+  --text:                 #e2e8f0;   /* light gray text */
+  --gray:                 #94a3b8;   /* medium gray */
+  --border:               #334155;   /* dark slate border */
+  --shadow-sm:            0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md:            0 6px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg:            0 16px 48px rgba(0, 0, 0, 0.6);
+}
+
+/* Scrollbar styling for dark mode */
+:root[data-theme="dark"] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Light scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transition for theme switch */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Don't animate these */
+img, video, canvas, svg, button:hover, a:hover {
+  transition: none;
+}
+
+/* Dark mode specific overrides */
+:root[data-theme="dark"] .navbar {
+  background: var(--card-bg);
+  border-bottom-color: var(--border);
+}
+
+:root[data-theme="dark"] .logo {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:root[data-theme="dark"] .nav-links a:hover {
+  background: var(--muted-purple);
+  color: var(--primary-light);
+}
+
+:root[data-theme="dark"] .nav-links a.active {
+  background: var(--primary);
+  color: var(--light-bg);
+}
+
+:root[data-theme="dark"] .btn {
+  transition: all 0.2s ease;
+}
+
+:root[data-theme="dark"] .btn-primary {
+  background: var(--primary);
+  color: var(--light-bg);
+  border: none;
+}
+
+:root[data-theme="dark"] .btn-primary:hover {
+  background: var(--primary-light);
+  color: var(--light-bg);
+}
+
+:root[data-theme="dark"] .btn-outline {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] .btn-outline:hover {
+  background: var(--muted-purple);
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+
+:root[data-theme="dark"] .card {
+  background: var(--card-bg);
+  border-color: var(--border);
+}
+
+:root[data-theme="dark"] .card-header {
+  background: linear-gradient(135deg, var(--muted-purple), var(--card-bg));
+}
+
+:root[data-theme="dark"] .section-head {
+  color: var(--dark);
+}
+
+:root[data-theme="dark"] .filter-tab {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--card-bg);
+}
+
+:root[data-theme="dark"] .filter-tab:hover {
+  background: var(--muted-purple);
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+
+:root[data-theme="dark"] .filter-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--light-bg);
+}
+
+:root[data-theme="dark"] .search-wrap input {
+  background: var(--card-bg);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] .search-wrap input::placeholder {
+  color: var(--gray);
+}
+
+:root[data-theme="dark"] .search-wrap input:focus {
+  border-color: var(--primary);
+  background: var(--card-bg);
+}
+
+:root[data-theme="dark"] .footer {
+  background: var(--card-bg);
+  border-top-color: var(--border);
+}
+
+:root[data-theme="dark"] .footer-bottom {
+  border-top-color: var(--border);
+}
+
+/* Form inputs in dark mode */
+:root[data-theme="dark"] input[type="text"],
+:root[data-theme="dark"] input[type="email"],
+:root[data-theme="dark"] input[type="password"],
+:root[data-theme="dark"] input[type="date"],
+:root[data-theme="dark"] input[type="time"],
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] textarea {
+  background: var(--card-bg);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] input:focus,
+:root[data-theme="dark"] select:focus,
+:root[data-theme="dark"] textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+  color: var(--gray);
+}
+
+/* Tables in dark mode */
+:root[data-theme="dark"] .comparison-table {
+  background: var(--card-bg);
+}
+
+:root[data-theme="dark"] .comparison-table th {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: var(--light-bg);
+}
+
+:root[data-theme="dark"] .comparison-table td {
+  border-bottom-color: var(--border);
+}
+
+:root[data-theme="dark"] .comparison-table tr:hover {
+  background: var(--muted-purple);
+}
+
+/* Dashboard cards in dark mode */
+:root[data-theme="dark"] .dashboard-card {
+  background: var(--card-bg);
+  border-color: var(--border);
+}
+
+:root[data-theme="dark"] .quick-stat {
+  background: var(--muted-purple);
+  border-color: var(--border);
+}
+
+:root[data-theme="dark"] .timetable-item,
+:root[data-theme="dark"] .assignment-item,
+:root[data-theme="dark"] .exam-item {
+  background: var(--muted-purple);
+  border-color: var(--border);
+}
+
+/* Modals and dialogs */
+:root[data-theme="dark"] .auth-container > div {
+  background: var(--card-bg);
+  border-color: var(--border);
+}
+
+:root[data-theme="dark"] .profile-action-card {
+  background: var(--card-bg);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] .profile-action-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 12px 32px rgba(167, 139, 250, 0.15);
+}
+
+/* Empty states */
+:root[data-theme="dark"] .empty-state {
+  color: var(--gray);
+}
+
+/* Notice banners */
+:root[data-theme="dark"] .notice-banner {
+  background: rgba(167, 139, 250, 0.1);
+  border-left-color: var(--primary);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] .tips-card {
+  background: var(--muted-purple);
+  border-left-color: var(--primary);
+  color: var(--text);
+}
+
+/* Job cards */
+:root[data-theme="dark"] .job-card {
+  background: var(--card-bg);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] .job-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 6px 24px rgba(167, 139, 250, 0.15);
+}
+
+/* Paper cards */
+:root[data-theme="dark"] .paper-card {
+  background: var(--card-bg);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* Result table */
+:root[data-theme="dark"] .results-table-wrap {
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+:root[data-theme="dark"] .results-table {
+  background: var(--card-bg);
+}
+
+:root[data-theme="dark"] .results-table thead {
+  background: var(--muted-purple);
+  border-bottom-color: var(--border);
+}
+
+:root[data-theme="dark"] .results-table tbody tr:hover {
+  background: var(--muted-purple);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: var(--muted-purple) !important;
+  border: 2px solid var(--border) !important;
+  color: var(--text) !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 1.1rem !important;
+  transition: all 0.3s !important;
+}
+
+.theme-toggle:hover {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--light-bg) !important;
+}
+
+/* Countdown banner dark mode */
+:root[data-theme="dark"] .countdown-banner {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: var(--light-bg);
+}
+
+/* Make sure all text is readable */
+:root[data-theme="dark"] h1,
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,
+:root[data-theme="dark"] h5,
+:root[data-theme="dark"] h6 {
+  color: var(--dark);
+}
+
+:root[data-theme="dark"] p,
+:root[data-theme="dark"] a,
+:root[data-theme="dark"] li,
+:root[data-theme="dark"] span {
+  color: var(--text);
+}
+
+:root[data-theme="dark"] a {
+  color: var(--primary-light);
+}
+
+:root[data-theme="dark"] a:hover {
+  color: var(--primary);
+}
+
+/* Hero section in dark mode */
+:root[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, var(--light-bg), var(--muted-purple));
+}
+
+:root[data-theme="dark"] .hero-orb-orange {
+  background: rgba(249, 115, 22, 0.1);
+}
+
+/* Ensure good contrast everywhere */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
